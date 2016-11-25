@@ -115,7 +115,7 @@ function setservicestate ($jsonstring) {
 }
 
 $htReplace = New-Object hashtable
-foreach ($letter in (Write-Output ä ae ö oe ü ue Ä Ae Ö Oe Ü Ue ß ss)) {
+foreach ($letter in (Write-Output Ã¤ ae Ã¶ oe Ã¼ ue Ã„ Ae Ã– Oe Ãœ Ue ÃŸ ss)) {
     $foreach.MoveNext() | Out-Null
     $htReplace.$letter = $foreach.Current
 }
@@ -190,14 +190,14 @@ foreach ($update in $updates) {
 		$countHidden++
 	}
 	elseif ($update.AutoSelectOnWebSites) {
-		$criticalTitles += $update.Title + " `n"
+		$criticalTitles += "[" + $update.Title + "] "
 		$countCritical++
 	} else {
 		$countOptional++
 	}
 }
 if (($countCritical + $countOptional) -gt 0) {
-	$returnString = "Updates: $countCritical critical, $countOptional optional" + [Environment]::NewLine + "$criticalTitles"
+	$returnString = "Updates: $countCritical critical, $countOptional optional - $criticalTitles"
 	$returnString = [regex]::Replace($returnString, $pattern, { $htReplace[$args[0].value] })
 	
 	# 1024 chars max, reserving 48 chars for performance data -> 
