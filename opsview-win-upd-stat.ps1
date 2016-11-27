@@ -24,11 +24,11 @@
 #			Script errors - UNKNOWN (3)
 #
 #           Parameters:
-#           -server (IP or hostname of Opsview master server)
-#           -user (Opsview username)
-#           -pass (Opsview password)
-#           -hostname (name of host object in Opsview)
-#           -service (name of service check for host object)
+#           -server (IP or hostname of Opsview master server) | default: opsview.domain.de
+#           -user (Opsview username)                          | default: winupdateuser
+#           -pass (Opsview password)                          | default: password
+#           -hostname (name of host object in Opsview)        | default: FQDN from DNS resolution via .Net class
+#           -service (name of service check for host object)  | default: WinUpdatePassive
 #
 #           Example/Syntax:
 #           .\opsview-win-upd-stat.ps1 -server opsview.domain.de -user winupdateuser -pass password -hostname myhost.domain.de -service WinUpdatePassive 
@@ -39,6 +39,8 @@
 #
 #
 # CHANGELOG:
+# 1.1  2016-11-27 - set default params
+#                 - determine Opsview-Object-Hostname (FQDN via .Net class)
 # 1.0  2016-11-25 - initial version
 # Based on check_windows_updates.ps1 vers. 1.45 by Christian Kaufmann, ck@tupel7.de
 #
@@ -59,12 +61,14 @@
 # this program; if not, see <http://www.gnu.org/licenses>.
 #################################################################################
 
+### Set param default values to your environment if not set via arguments.
+### Hostname e.g. is set to FQDN from DNS if not set because our Opsview hosts are named like their FQDN names.
 param (
-    [string]$server = $args[0],
-    [string]$user = $args[1],
-    [string]$pass = $args[2],
-    [string]$hostname = $args[3],
-    [string]$service = $args[4]
+    [string]$server = "opsview.domain.de",
+    [string]$user = "winupdateuser",
+    [string]$pass = "password",
+    [string]$hostname = [System.Net.Dns]::GetHostEntry([string]$env:computername).HostName,
+    [string]$service = "WinUpdatePassive"
 )
 
 ### URLs for authentication and config
