@@ -52,12 +52,12 @@
         Date Coded : 2016-11-25
         
         Return Values:
-		No updates available - OK (0)
-		Only Hidden Updates - OK (0)
-		Updates already installed, reboot required - WARNING (1)
-		Optional updates available - WARNING (1)
-		Critical updates available - CRITICAL (2)
-		Script errors - UNKNOWN (3)
+	No updates available - OK (0)
+	Only Hidden Updates - OK (0)
+	Updates already installed, reboot required - WARNING (1)
+	Optional updates available - WARNING (1)
+	Critical updates available - CRITICAL (2)
+	Script errors - UNKNOWN (3)
     .LINK 
         https://exchange.nagios.org/directory/Plugins/Operating-Systems/Windows-NRPE/Check-Windows-Updates-using-Powershell/details 
     .LINK 
@@ -149,7 +149,7 @@ function setservicestate ($jsonstring) {
 
 ### Replace german vowel mutation
 $htReplace = New-Object hashtable
-foreach ($letter in (Write-Output ä ae ö oe ü ue Ä Ae Ö Oe Ü Ue ß ss)) {
+foreach ($letter in (Write-Output Ã¤ ae Ã¶ oe Ã¼ ue Ã„ Ae Ã– Oe Ãœ Ue ÃŸ ss)) {
     $foreach.MoveNext() | Out-Null
     $htReplace.$letter = $foreach.Current
 }
